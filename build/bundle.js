@@ -124,11 +124,27 @@ var Graph = function () {
   return Graph;
 }();
 
+var isMandlebrot = function isMandlebrot(coord) {
+  var cr = coord.x;
+  var ci = coord.y;
+  var zr = cr;
+  var zi = ci;
+
+  for (var i = 0; i < 100; i++) {
+    if (zr ** 2 + zi ** 2 > 4) {
+      return false;
+    }
+
+    newZr = zr * zr - zi * zi + cr;
+    newZi = zr * zi * 2 + ci;
+    zr = newZr;
+    zi = newZi;
+  }
+  return true;
+};
+
 var graph = new Graph('mandlebrot');
-graph.r = 500;
-graph.render(function (coord) {
-  return coord.x == coord.y || coord.x * 2 == coord.y || coord.x * 3 == coord.y || coord.x * 4 == coord.y || coord.x * 5 == coord.y || coord.x * 6 == coord.y || coord.x * 40 == coord.y;
-});
+graph.render(isMandlebrot);
 
 /***/ })
 /******/ ]);
