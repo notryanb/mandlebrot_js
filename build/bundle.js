@@ -108,7 +108,7 @@ var Graph = function () {
     value: function render(predicate) {
       for (var i = 0; i < this.canvas.width * this.canvas.height * 4; i += 4) {
         var val = predicate(this.indexToCoord(i));
-        var set = val[0] ? 0 : val[1] / this.iterations * 0xffffff;
+        var set = val[0] ? 0 : val[1] / this.iterations * 0x1D8348;
         this.imageData.data[i] = (set & 0xff0000) >> 16;
         this.imageData.data[i + 1] = (set & 0x00ff00) >> 8;
         this.imageData.data[i + 2] = set & 0x0000ff;
@@ -142,9 +142,9 @@ var isMandlebrot = function isMandlebrot(coord) {
 };
 
 var graph = new Graph('mandlebrot');
-graph.center.x = -0.7453;
-graph.center.y = 0.1127;
-graph.r = 0.00015;
+graph.center.x = -1.25066;
+graph.center.y = 0.02012;
+graph.r = 0.00005;
 graph.render(isMandlebrot);
 
 /***/ })

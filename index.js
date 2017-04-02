@@ -31,7 +31,7 @@ class Graph {
   render(predicate) {
     for (let i = 0; i < this.canvas.width * this.canvas.height * 4; i += 4) {
       let val = predicate(this.indexToCoord(i));
-      let set = val[0] ? 0 : (val[1] / this.iterations) * 0xffffff;
+      let set = val[0] ? 0 : (val[1] / this.iterations) * 0x1D8348;
       this.imageData.data[i] = (set & 0xff0000) >> 16;
       this.imageData.data[i + 1] = (set & 0x00ff00) >> 8;
       this.imageData.data[i + 2] = set & 0x0000ff;
@@ -62,7 +62,7 @@ const isMandlebrot = (coord) => {
 }
 
 let graph = new Graph('mandlebrot');
-graph.center.x = -0.7453;
-graph.center.y = 0.1127;
-graph.r = 0.00015;
+graph.center.x = -1.25066;
+graph.center.y = 0.02012;
+graph.r = 0.00005;
 graph.render(isMandlebrot);
