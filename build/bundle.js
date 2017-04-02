@@ -70,8 +70,53 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-var canvas = document.getElementById('mandlebrot');
-var ctx = canvas.getContext('2d');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Graph = function () {
+  function Graph(canvasId) {
+    _classCallCheck(this, Graph);
+
+    this.canvas = document.getElementById(canvasId);
+    this.ctx = this.canvas.getContext('2d');
+    this.imageData = this.ctx.createImageData(this.canvas.width, this.canvas.height);
+    this.aspectRatio = this.canvas.height / this.canvas.width;
+    this.r = 4;
+    this.center = { x: 0, y: 0 };
+    this.indexToCoord = this.indexToCoord.bind(this);
+    this.render = this.render.bind(this);
+  }
+
+  _createClass(Graph, [{
+    key: 'indexToCoord',
+    value: function indexToCoord(i) {
+      var index = i / 4;
+      var coord = {
+        x: index % this.canvas.width,
+        y: Math.floor(index / this.canvas.width)
+      };
+
+      coord.x = (coord.x * this.r / this.canvas.width - this.r / 2 + this.center.x * this.aspectRatio) / this.aspectRatio;
+
+      coord.y = (coord.y * this.r / this.canvas.width - r / 2) * -1 + this.center.y;
+      return coord;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      for (var i = 0; i < this.imageData.data.length; i += 1) {
+        this.imageData.data[i] = Math.random() * 255;
+      }
+      this.ctx.putImageData(this.imageData, 0, 0);
+    }
+  }]);
+
+  return Graph;
+}();
+
+var graph = new Graph('mandlebrot');
+graph.render();
 
 /***/ })
 /******/ ]);
