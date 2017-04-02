@@ -22,18 +22,46 @@ class Graph {
         (this.center.x * this.aspectRatio)) / this.aspectRatio;
 
     coord.y = 
-      (((coord.y * this.r / this.canvas.width) - r / 2) *  
+      (((coord.y * this.r / this.canvas.width) - this.r / 2) *  
         -1) + this.center.y;
     return coord;
   }
 
-  render() {
-    for (let i = 0; i < this.imageData.data.length; i += 1) {
-      this.imageData.data[i] = Math.random() * 255;
+  render(predicate) {
+    //for (let i = 0; i < this.imageData.data.length; i += 1) {
+      //this.imageData.data[i] = Math.random() * 255;
+    //}
+    //this.ctx.putImageData(this.imageData, 0, 0);
+    //
+    for (let i = 0; i < this.canvas.width * this.canvas.height * 4; i += 4) {
+      set = predicate(this.indexToCoord(i)) ? 255 : 0;
+      this.imageData.data[i] = 0;
+      this.imageData.data[i + 1] = 0;
+      this.imageData.data[i + 2] = 0;
+      this.imageData.data[i + 3] = set; 
     }
     this.ctx.putImageData(this.imageData, 0, 0);
   }
 }
 
 let graph = new Graph('mandlebrot');
-graph.render();
+graph.r = 500;
+graph.render(
+  (coord) => {
+    return (
+      coord.x == coord.y
+      ||
+      coord.x * 2 == coord.y
+      ||
+      coord.x * 3 == coord.y
+      ||
+      coord.x * 4 == coord.y
+      ||
+      coord.x * 5 == coord.y
+      ||
+      coord.x * 6 == coord.y
+      ||
+      coord.x * 40 == coord.y
+    )
+  }
+);
